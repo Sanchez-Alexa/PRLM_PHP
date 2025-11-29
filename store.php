@@ -24,58 +24,66 @@
             border: 1px solid #ccc;
             text-align: center;
         }
-        th {
-            background: #222;
-            color: #fff;
-        }
+        th { background: #222; color: #fff; }
     </style>
 </head>
 <body>
+
 <h1>🛒 Welcome to My PHP Store</h1>
 <?php
-$products = [
-    ["name" => "Wireless Mouse", "price" => 350],
-    ["name" => "Mechanical Keyboard", "price" => 1499],
-    ["name" => "Wireless Headphone", "price" => 299]
-];
 
+require "products.php";
+
+//variables
 $storeName = "Techy Essentials";
 $shippingFee = 50;
-$isOpen = true; // boolean example
+$isOpen = true;
 
-echo "<p><b>Store:</b> $storeName</p>";
-echo "<p><b>Shipping Fee:</b> ₱$shippingFee</p>";
-echo "<p><b>Store Open:</b> " . ($isOpen ? "Yes" : "No") . "</p><br>";
+//conditional statement
+if ($isOpen) {
+    echo "<p><b>Store Status:</b> Open</p>";
+} else {
+    echo "<p><b>Store Status:</b> Closed</p>";
+}
+
+//another condition
+if (count($products) > 3) {
+    echo "<p><i>We currently have many items available!</i></p>";
+} else {
+    echo "<p><i>Limited items available.</i></p>";
+}
+echo "<p><b>Shipping Fee:</b> ₱$shippingFee</p><br>";
 ?>
-
 <table>
     <tr>
         <th>Product</th>
         <th>Price (₱)</th>
         <th>Total with Shipping</th>
+        <th>Category</th>
     </tr>
 
 <?php
 
+//loop through products
 foreach ($products as $item) {
-
-    // variables
     $price = $item["price"];
-
-    // expression using arithmetic operator (+)
-    $totalCost = $price + $shippingFee;
-
+    $total = $price + $shippingFee;
+    //conditional inside loop
+    if ($price >= 1000) {
+        $category = "Expensive";
+    } else {
+        $category = "Budget";
+    }
     echo "
     <tr>
         <td>{$item['name']}</td>
         <td>$price</td>
-        <td>$totalCost</td>
+        <td>$total</td>
+        <td>$category</td>
     </tr>
     ";
 }
 ?>
-
 </table>
-
 </body>
 </html>
